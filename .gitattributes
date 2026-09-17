@@ -1,0 +1,20 @@
+# Normalisation des fins de ligne : LF dans le depot pour le texte.
+* text=auto eol=lf
+
+# Les CSV fournis par l'IUT sont en CRLF et servent de source d'import
+# telle quelle : on les laisse intacts pour ne pas fausser un diff.
+*.csv -text
+
+# Binaires : jamais de conversion, jamais de diff textuel.
+*.pbix   binary
+*.loo    binary
+*.lo1    binary
+*.pdf    binary
+*.odt    binary
+*.png    binary
+*.jpg    binary
+
+# GitHub : ne pas compter ces fichiers dans les statistiques de langage
+# du depot, ce sont des donnees et des livrables, pas du code.
+*.csv    linguist-documentation
+docs/**  linguist-documentation

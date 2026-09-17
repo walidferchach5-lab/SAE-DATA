@@ -1,0 +1,29 @@
+# --- Sauvegardes d'outils ---------------------------------------------
+# Looping duplique le modele dans un .lo1 a chaque enregistrement, et
+# depose sa banniere publicitaire a cote du modele ouvert
+*.lo1
+LoopingImage.jpg
+*.bak
+*~
+
+# Fichiers temporaires LibreOffice / Word
+.~lock.*#
+~$*
+*.tmp
+
+# Caches Power BI Desktop
+*.pbix.tmp
+*.pbiviz
+
+# --- Systeme ----------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# --- Editeurs ---------------------------------------------------------
+.vscode/
+.idea/
+*.swp
