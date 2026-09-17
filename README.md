@@ -12,6 +12,8 @@ cahier des charges ; le second la fait parler.
 Walid Ferchach - BUT Informatique
 Binôme S1.04 : Amdjed Loucif · Binôme S2.04 : Raphaël Ghisquière
 
+[![Tableau de bord Power BI](sae-s2.04-power-bi/docs/captures/01-ventes-clientele.png)](sae-s2.04-power-bi)
+
 ## Le fil conducteur
 
 « Le Jardin de Charlotte » vend des bouquets sur commande. Le client décrit
@@ -38,10 +40,13 @@ rendu.
 
 ## SAE S2.04 - Tableau de bord Power BI
 
-Un rapport Power BI de cinq pages construit sur la version complète de la
-base (5 000 commandes), avec les mesures DAX nécessaires aux indicateurs
-demandés : chiffre d'affaires brut et net, retards de livraison, prix
-d'achat des fleurs, marges par fournisseur.
+Un rapport Power BI de cinq pages construit sur une base bien plus large -
+5 000 commandes et 800 clients répartis dans toute la France entre 2015 et
+2025 - avec les mesures DAX nécessaires aux indicateurs demandés : chiffre
+d'affaires brut et net, retards de livraison, prix d'achat des fleurs,
+marges par fleur et par fournisseur.
+
+Les cinq pages sont reproduites en captures dans le README du projet.
 
 → [Voir le projet](sae-s2.04-power-bi)
 

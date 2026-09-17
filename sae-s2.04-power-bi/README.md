@@ -7,9 +7,15 @@
 **BUT Informatique, semestre 2 - ressource R2.06 Bases de données**
 Walid Ferchach · Raphaël Ghisquière - groupe G3S2A, mars 2026
 
-Suite du projet [SAE S1.04](../sae-s1.04-base-de-donnees), sur la même
-activité fictive mais à une autre échelle : ici la base Oracle fournie
-contient 5 000 commandes, 7 500 bouquets et 800 clients.
+![Page Ventes & Clientèle](docs/captures/01-ventes-clientele.png)
+
+Suite de la [SAE S1.04](../sae-s1.04-base-de-donnees), sur la même activité
+fictive. Le scénario du sujet reprend celui du semestre 1 - une fleuriste
+lyonnaise - mais la base Oracle fournie est d'une autre nature : 5 000
+commandes et 800 clients répartis sur une trentaine de villes de toute la
+France, de 2015 à 2025, approvisionnés par 20 grossistes régionaux
+(Rungis Fleurs, Normandie Floral, PACA Fleurs…). Le catalogue compte 28
+fleurs, de la rose rouge à l'orchidée phalaenopsis.
 
 Le sujet complet : [`docs/sujet-sae-s2.04.pdf`](docs/sujet-sae-s2.04.pdf).
 
@@ -48,41 +54,85 @@ Les mesures et colonnes calculées ajoutées par-dessus :
 | `Moy_Fleurs_Par_Cmd` | nombre moyen de fleurs par commande |
 | `Jours_Retard` | écart entre livraison effective et date prévue |
 | `Retard Moyen Jours` | moyenne de ce retard sur la sélection |
-| `STATUTLIVRAISON` | à l'heure / en retard / non livrée |
+| `STATUTLIVRAISON` | aucun retard / avec retard / non livrée |
 | `Marge Unitaire` | prix de vente d'une fleur moins son prix d'achat moyen |
-| `ClientUnique` | identifiant d'affichage d'un client |
+| `ClientUnique` | nom du client accolé à son téléphone |
 | `MontantTotalAchat` | dépense d'achat cumulée |
 
-Le tableau de bord s'appuie sur une hiérarchie de dates, ce qui permet de
-descendre de l'année au trimestre puis au mois par simple exploration,
-plutôt que de dupliquer les visuels à chaque niveau de granularité.
+Deux choix de modélisation à signaler. Le tableau de bord s'appuie sur une
+**hiérarchie de dates**, ce qui permet de descendre de l'année au trimestre
+puis au mois par exploration, plutôt que de dupliquer les visuels à chaque
+niveau de granularité - c'est ce qui répond au « zoom sur une année »
+demandé au point 6 et au découpage mois/trimestre/année du point 7.
+
+`ClientUnique` concatène le nom et le téléphone parce que **le nom seul ne
+distingue pas les clients** : sur 800 clients, plusieurs homonymes
+coexistent. Les regrouper sur le nom aurait fusionné leurs commandes et
+faussé le classement des meilleurs clients.
 
 ## Les cinq pages
 
-Les visuels sont regroupés par question métier, et non dans l'ordre du
-sujet. Une barre de navigation permet de passer d'une page à l'autre.
+Les visuels sont regroupés par question métier plutôt que dans l'ordre du
+sujet, et une barre de navigation en bas de page permet de circuler entre
+elles.
 
-**Ventes & Clientèle** - la page d'entrée. Un KPI compare le CA à celui de
-l'année précédente, puis l'évolution annuelle du nombre de commandes et de
-clients, du chiffre d'affaires brut et net, la composition moyenne des
-commandes (bouquets et fleurs), et le classement des meilleurs clients.
+### Ventes & Clientèle
 
-**Suivi des Livraisons** - le volume de livraisons dans le temps et par
-ville destinataire, la répartition des commandes entre livrées à l'heure, en
-retard et non livrées, et le retard moyen en jours par année puis par ville.
-Un filtre de dates décline l'ensemble de la page sur une période.
+La page d'entrée, reproduite en tête de ce README. Deux cartes donnent
+d'emblée le chiffre d'affaires de l'année et son évolution - ici 92,78 k€ et
+−7,45 % depuis 2024. Suivent l'évolution annuelle du nombre de commandes et
+de clients, celle du chiffre d'affaires brut et net en aires empilées, la
+composition moyenne des commandes en bouquets et en fleurs, et le classement
+des meilleurs clients.
 
-**Historique des Achats** - l'évolution du prix d'achat moyen unitaire et les
-volumes achetés par année. Un filtre permet de suivre une fleur en
-particulier.
+### Suivi des Livraisons
 
-**Fournisseurs & Marges** - la marge unitaire par fleur, et deux treemaps qui
-comparent les grossistes sur le budget dépensé et sur les quantités
-fournies : un fournisseur peut peser lourd dans les dépenses sans livrer le
-plus gros volume.
+![Page Suivi des Livraisons](docs/captures/02-suivi-livraisons.png)
 
-**Répartition des clients** - une carte des clients par code postal, doublée
-d'un tableau croisé pour lire les valeurs exactes.
+Le retard moyen en jours et le volume de livraisons dans le temps, puis la
+répartition des commandes entre *aucun retard*, *avec retard* et *non
+livrée*, et le détail par ville - à la fois en volume et en retard moyen.
+Le filtre d'années à gauche décline toute la page sur une période.
+
+Deux lectures que la page rend immédiates : le retard moyen tient dans une
+fourchette étroite, autour d'un jour et demi sur dix ans, mais les commandes
+*avec retard* sont plus nombreuses que celles livrées à l'heure. Et
+l'effondrement du volume en 2025 est un artefact de la base, qui s'arrête en
+cours d'année - pas une chute d'activité.
+
+### Historique des Achats
+
+![Page Historique des Achats](docs/captures/03-historique-achats.png)
+
+L'évolution du prix d'achat moyen unitaire et les volumes achetés par année,
+avec un filtre pour suivre une fleur en particulier. La rose rouge écrase les
+autres en volume - environ 100 000 tiges par an contre quelques milliers -
+alors que les prix d'achat des cinq fleurs suivies restent tous dans une
+bande de 1,50 à 2,30 €.
+
+### Fournisseurs & Marges
+
+![Page Fournisseurs & Marges](docs/captures/04-fournisseurs-marges.png)
+
+La marge unitaire par fleur, et deux treemaps qui comparent les grossistes
+sur le budget dépensé puis sur les quantités fournies. Les mettre côte à
+côte est le but : les deux pavages ne se superposent pas, un fournisseur
+peut peser lourd dans les dépenses sans livrer le plus gros volume.
+
+Le classement des marges est le visuel le plus actionnable de la page.
+L'orchidée phalaenopsis et les pivoines dégagent plusieurs euros par tige,
+tandis que le bas de tableau - tulipes et gerbera orange - tombe à une marge
+quasi nulle. Or c'est précisément là que se trouvent les fleurs achetées en
+plus grand volume.
+
+### Répartition des clients
+
+![Page Répartition des clients](docs/captures/05-repartition-clients.png)
+
+Une carte des clients par code postal, doublée d'un tableau croisé pour lire
+les valeurs exactes. La clientèle est répartie très uniformément, entre 26 et
+27 clients par code postal : c'est un jeu de données généré, et la carte le
+montre mieux qu'un tableau.
 
 ## Couverture du sujet
 
@@ -97,11 +147,12 @@ d'un tableau croisé pour lire les valeurs exactes.
 | 9. À l'heure / en retard / non livrées, par année | Suivi des Livraisons |
 | 10. Retard moyen en jours par année | Suivi des Livraisons |
 | 11, 12. Prix d'achat et volumes, par fleur | Historique des Achats |
-| D. Trois besoins libres | KPI de CA et meilleurs clients (Ventes & Clientèle), marges et comparaison des grossistes (Fournisseurs & Marges) |
+| D. Trois besoins libres | KPI de CA et meilleurs clients (Ventes & Clientèle), marges par fleur et comparaison des grossistes (Fournisseurs & Marges) |
 
-Les points 11 et 12 demandaient de pouvoir choisir une fleur, et le point 6
-de pouvoir zoomer sur une année : ces interactions passent par les filtres de
-page et l'exploration de la hiérarchie de dates.
+Les points 6, 7, 11 et 12 demandaient des interactions - choisir une fleur,
+zoomer sur une année, changer de granularité : elles passent par les filtres
+de page et l'exploration de la hiérarchie de dates, et ne se voient donc pas
+sur des captures fixes.
 
 ## Évaluation
 
